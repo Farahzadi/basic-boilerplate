@@ -1,6 +1,7 @@
+
 var path = require('path')
 var webpack = require('webpack')
-var browsersync = require('browser-sync-webpack-plugin')
+var BrowserSync = require('browser-sync-webpack-plugin')
 
 module.exports = {
   target: 'web',
@@ -15,7 +16,7 @@ module.exports = {
   },
   module: {
     rules: [
-      {test: /\.js$/, exclude: /node_modules/, use: 'babel-loader'},
+      { test: /\.js$/, exclude: /node_modules/, use: 'babel-loader' },
       {
         test: /\.scss$/,
         exclude: /node_modules/,
@@ -45,7 +46,7 @@ module.exports = {
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NamedModulesPlugin(),
-    new browsersync({
+    new BrowserSync({
       host: 'localhost',
       port: '3000',
       proxy: 'http://localhost:8000',
