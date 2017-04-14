@@ -1,7 +1,8 @@
-
 var path = require('path')
 var webpack = require('webpack')
 var BrowserSync = require('browser-sync-webpack-plugin')
+var HtmlWebpackPlugin = require('html-webpack-plugin')
+var HtmlWebpackHarddiskPlugin = require('html-webpack-harddisk-plugin')
 
 module.exports = {
   target: 'web',
@@ -10,7 +11,7 @@ module.exports = {
     vendor: './js/src/vendor.js'
   },
   output: {
-    filename: '[name].js',
+    filename: '[name].bundle.js',
     path: path.join(__dirname, 'js', 'dist'),
     publicPath: 'js/dist'
   },
@@ -40,6 +41,11 @@ module.exports = {
             }
           }
         ]
+      },
+      {
+        test: /\.pug$/,
+        exclude: /node_modules/,
+        use: 'pug-loader'
       }
     ]
   },
@@ -53,6 +59,13 @@ module.exports = {
       files: '*.html',
     }, {
       reload: false
+    }),
+    new HtmlWebpackPlugin({
+      alwaysWriteToDisk: true,
+      template: 'pug/index.pug'
+    }),
+    new HtmlWebpackHarddiskPlugin({
+      outputPath: __dirname
     })
   ],
   devtool: 'inline-source-map',
