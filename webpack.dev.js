@@ -1,5 +1,6 @@
 var path = require('path')
 var webpack = require('webpack')
+var browsersync = require('browser-sync-webpack-plugin')
 
 module.exports = {
   target: 'web',
@@ -43,7 +44,15 @@ module.exports = {
   },
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
-    new webpack.NamedModulesPlugin()
+    new webpack.NamedModulesPlugin(),
+    new browsersync({
+      host: 'localhost',
+      port: '3000',
+      proxy: 'http://localhost:8000',
+      files: '*.html',
+    }, {
+      reload: false
+    })
   ],
   devtool: 'inline-source-map',
   stats: 'verbose',
