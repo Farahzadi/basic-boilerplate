@@ -45,7 +45,12 @@ module.exports = {
       {
         test: /\.pug$/,
         exclude: /node_modules/,
-        use: 'pug-loader'
+        use: {
+          loader: 'pug-loader',
+          options: {
+            pretty: true
+          }
+        }
       }
     ]
   },
@@ -56,7 +61,7 @@ module.exports = {
       host: 'localhost',
       port: '3000',
       proxy: 'http://localhost:8000',
-      files: '*.html',
+      files: '*.html'
     }, {
       reload: false
     }),
