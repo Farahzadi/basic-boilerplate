@@ -1,5 +1,5 @@
 var path = require('path')
-var ExtractTextPlugin = require('Extract-text-webpack-plugin')
+var webpack = require('webpack')
 
 module.exports = {
   target: 'web',
@@ -18,20 +18,41 @@ module.exports = {
       {
         test: /\.scss$/,
         exclude: /node_modules/,
-        use: ExtractTextPlugin.extract({
-          fallback: 'style-loader',
-          use: ['css-loader', 'sass-loader']
-        })
+        use: [
+          {
+            loader: 'style-loader',
+            options: {
+              sourceMap: true
+            }
+          },
+          {
+            loader: 'css-loader',
+            options: {
+              sourceMap: true
+            }
+          },
+          {
+            loader: 'sass-loader',
+            options: {
+              sourceMap: true
+            }
+          }
+        ]
       }
     ]
   },
   plugins: [
-    new ExtractTextPlugin('../../css/main.css')
+    new webpack.HotModuleReplacementPlugin(),
+    new webpack.NamedModulesPlugin()
   ],
-  watch: true,
-  watchOptions: {
-    ignored: /node_modules/
-  },
-  devtool: 'source-map',
-  stats: 'verbose'
+  devtool: 'inline-source-map',
+  stats: 'verbose',
+  devServer: {
+    port: 8000,
+    hot: true,
+    overlay: {
+      warnings: true,
+      errors: true
+    }
+  }
 }
